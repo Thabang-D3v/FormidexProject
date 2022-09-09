@@ -34,7 +34,7 @@ class FormidexServiceTest {
     private FormidexService formidexService;
 
     @Test
-    void retrieveByDate() throws Exception {
+    void retrieveByDate() {
         int number =new Random().nextInt(10);
         Mockito.when(forexList.getData()).thenReturn(getData());//mock the response from the bean creating which
                                                                 //is not available during test phase
@@ -42,14 +42,13 @@ class FormidexServiceTest {
                 .date(LocalDate.now().minusDays(number))
                 .build();
         ResponseEntity<ResponseDTO>retrieveByDate=formidexService.retrieveByDate(dto);
-        Assertions.assertEquals(HttpStatus.OK,retrieveByDate.getStatusCode());
-
+        Assertions.assertEquals(HttpStatus.OK,retrieveByDate.getStatusCode());//assert the response from the logic
         System.out.println(retrieveByDate);
 
     }
 
     @Test
-    void convertMoney() throws Exception{
+    void convertMoney() {
         int number =new Random().nextInt(10);
         Mockito.when(forexList.getData()).thenReturn(getData());
         ConvertDTO dto=ConvertDTO.builder()
@@ -66,7 +65,7 @@ class FormidexServiceTest {
     }
 
     @Test
-    void getHighestExchangeRate() throws Exception{
+    void getHighestExchangeRate() {
         int number =new Random().nextInt(10);
         Mockito.when(forexList.getData()).thenReturn(getData());
         DateRangeDTO dateRangeDTO=DateRangeDTO.builder()
@@ -81,7 +80,7 @@ class FormidexServiceTest {
     }
 
     @Test
-    void getAverageExchangeRate()throws Exception{
+    void getAverageExchangeRate() {
         int number =new Random().nextInt(10);
         Mockito.when(forexList.getData()).thenReturn(getData());
         DateRangeDTO dateRangeDTO=DateRangeDTO.builder()
@@ -102,7 +101,7 @@ class FormidexServiceTest {
         List<Forex>forexList=new ArrayList<>();
         try (InputStream in = uri.toURL().openStream();
              ReadableByteChannel rbc = Channels.newChannel(in);
-             FileOutputStream fos = new FileOutputStream("currency.csv");) {
+             FileOutputStream fos = new FileOutputStream("currency.csv")) {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             BufferedInputStream bis = new BufferedInputStream(uri.toURL().openStream());//stream for deserializing the file from network
             ZipInputStream zip=new ZipInputStream(bis);
