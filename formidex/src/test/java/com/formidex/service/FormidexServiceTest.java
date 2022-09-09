@@ -5,11 +5,13 @@ import com.formidex.dto.DateDTO;
 import com.formidex.dto.DateRangeDTO;
 import com.formidex.dto.ResponseDTO;
 import com.formidex.utils.ForexList;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.BufferedInputStream;
@@ -40,10 +42,8 @@ class FormidexServiceTest {
                 .date(LocalDate.now().minusDays(number))
                 .build();
         ResponseEntity<ResponseDTO>retrieveByDate=formidexService.retrieveByDate(dto);
-        if (!retrieveByDate.getStatusCode().is2xxSuccessful())
-            throw new Exception("Test failed");
-        //else if (!(retrieveByDate.getBody().getResponse() instanceof Forex))
-          //  throw new Exception("Test failed");
+        Assertions.assertEquals(HttpStatus.OK,retrieveByDate.getStatusCode());
+
         System.out.println(retrieveByDate);
 
     }
@@ -59,8 +59,7 @@ class FormidexServiceTest {
                 .source(getCurrency())
                 .build();
         ResponseEntity<ResponseDTO>convertMoney=formidexService.convertMoney(dto);
-        if (!convertMoney.getStatusCode().is2xxSuccessful()&&!convertMoney.getStatusCode().is4xxClientError())
-            throw new Exception("Test failed"+convertMoney);
+        Assertions.assertEquals(HttpStatus.OK,convertMoney.getStatusCode());
 
         System.out.println(convertMoney);
 
@@ -76,8 +75,7 @@ class FormidexServiceTest {
                 .start(LocalDate.now())
                 .build();
         ResponseEntity<ResponseDTO>highestExchangeRate=formidexService.getHighestExchangeRate(dateRangeDTO);
-        if (!highestExchangeRate.getStatusCode().is2xxSuccessful()&&!highestExchangeRate.getStatusCode().is4xxClientError())
-            throw new Exception("Test failed"+highestExchangeRate);
+        Assertions.assertEquals(HttpStatus.OK,highestExchangeRate.getStatusCode());
         System.out.println(highestExchangeRate);
 
     }
@@ -92,9 +90,7 @@ class FormidexServiceTest {
                 .start(LocalDate.now())
                 .build();
         ResponseEntity<ResponseDTO>getAverageExchangeRate=formidexService.getAverageExchangeRate(dateRangeDTO);
-        if (!getAverageExchangeRate.getStatusCode().is2xxSuccessful()&&!getAverageExchangeRate.getStatusCode().is4xxClientError())
-            throw new Exception("Test failed"+getAverageExchangeRate);
-
+        Assertions.assertEquals(HttpStatus.OK,getAverageExchangeRate.getStatusCode());
         System.out.println(getAverageExchangeRate);
 
 
@@ -157,7 +153,7 @@ class FormidexServiceTest {
         }
     }
 
-    private String getCurrency(){
+    private String getCurrency(){//randomly pick a currency for the test case
         List<String>currencies= Arrays.asList("USD","JPY","BGN","CYP","CZK","DKK","EEK","GBP","HUF","LTL","LVL",
                 "MTL","PLN","ROL","RON","SEK","SIT","SKK","CHF","ISK","NOK","HRK","RUB","TRL",
                 "TRY","AUD","BRL","CAD","CNY","HKD","IDR","ILS","INR","KRW","MXN","MYR","NZD","PHP","SGD","THB","ZAR");
