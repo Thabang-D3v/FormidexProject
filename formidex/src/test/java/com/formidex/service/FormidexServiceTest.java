@@ -24,8 +24,6 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import static org.junit.jupiter.api.Assertions.*;
 @WebMvcTest(FormidexService.class)
 class FormidexServiceTest {
     @MockBean
