@@ -105,10 +105,10 @@ public class FormidexService {
             responseDTO= ResponseDTO.builder()
                     .message(message)
                     .response(byDate)
-                    .code(404)
+                    .code(200)
                     .build();
             LOG.info("Exchange rates not found for the specified date, request: {}  response:{}",convertDTO,responseDTO);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 
         } catch (Exception e) {
             String m="Something went wrong with the request";
