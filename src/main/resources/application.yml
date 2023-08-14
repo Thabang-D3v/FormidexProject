@@ -1,0 +1,12 @@
+server:
+  servlet:
+    contextPath: /formidex/v1
+spring:
+  profiles:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+SONAR_TOKEN: b4f46c920e3f62cac2ca5894a08a8eaaf6b8be0d
+sonar:
+  projectKey: Thabang-D3v_FormidexProject
+  organization: thabang-d3v
